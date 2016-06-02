@@ -22,5 +22,11 @@ for i = 1:nobs
 end
 toc
 
-pHelp_HelperContext = length(find(observation(trait==1)))
+Results = [trait' relation' gender' helpR' hindR' intent' observation'];
 
+obs_by_trait = zeros(2,2);
+for i = 1:nobs
+    obs_by_trait(trait(i),observation(i)) = obs_by_trait(trait(i),observation(i))+1;
+end
+
+bar(obs_by_trait)

@@ -5,7 +5,7 @@ function [helpR, hindR, action, outcome] = mentalModel(trait,context)
     outcome = computeObservation(action);
 end    
 
-function [helpR, hindR] = computeState1(trait,context) %helper or hinderer, ignores context
+function [helpR, hindR] = computeState(trait,context) %helper or hinderer, ignores context
 %    drawB = @(a,b) random(makedist('beta','a',a,'b',b));
 %    drawB2 = @(a,b) betainv(rand,a,b);
 
@@ -42,7 +42,7 @@ function [helpR, hindR] = computeState3(trait,context) % helps family and friend
 end
 
 function intent = computeIntent(helpR, hindR)
-    tao = 0.01;  %noise parameter
+    tao = 0.2;  %noise parameter
     pHelp = exp(helpR/tao)/(exp(helpR/tao)+exp(hindR/tao));
     act = rand<pHelp;
     if act
@@ -53,7 +53,7 @@ function intent = computeIntent(helpR, hindR)
 end
 
 function outcome = computeObservation(action)
-    competence = 1; %noise parameter
+    competence = 0.9; %noise parameter
     outcome = rand<competence;
     if outcome
         outcome = action;
