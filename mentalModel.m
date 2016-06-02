@@ -1,6 +1,6 @@
 
 function [helpR, hindR, action, outcome] = mentalModel(trait,context)
-    [helpR, hindR] = computeState(trait,context);
+    [helpR, hindR] = computeState3(trait,context);
     action = computeIntent(helpR,hindR);
     outcome = computeObservation(action);
 end    

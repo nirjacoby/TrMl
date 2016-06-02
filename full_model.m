@@ -24,9 +24,20 @@ toc
 
 Results = [trait' relation' gender' helpR' hindR' intent' observation'];
 
-obs_by_trait = zeros(2,2);
+obs_by_t = zeros(2,2);
+obs_by_tg = zeros(4,2);
+obs_by_tgr = zeros(12,2);
 for i = 1:nobs
-    obs_by_trait(trait(i),observation(i)) = obs_by_trait(trait(i),observation(i))+1;
+    ti = trait(i);
+    tgi = 2*(gender(i)-1)+ti;
+    tgri = 4*(relation(i)-1)+tgi;
+    obs_by_t(ti,observation(i)) = obs_by_t(ti,observation(i))+1;
+    obs_by_tg(tgi,observation(i)) = obs_by_tg(tgi,observation(i))+1;
+    obs_by_tgr(tgri,observation(i)) = obs_by_tgr(tgri,observation(i))+1;
 end
 
-bar(obs_by_trait)
+% transform trait x context rows to conditional probabilities 
+sum_tgr = sum(obs_by_tgr,2);
+p_tgr = sum_tgr/sum(sum_tgr);
+p_obs_by_tgr (:,1) = obs_by_tgr(:,1)./sum_tgr;
+p_obs_by_tgr (:,2) = obs_by_tgr(:,2)./sum_tgr;
